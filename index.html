@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://*.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#0e0e10">
+<meta name="description" content="Orbit tracks your attendance and assignments, with a weekly timetable to tie them together.">
+<link rel="icon" href="icon.png" type="image/png">
+<title>Orbit</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+ <div class="brand"><span class="mark"><img src="icon.png" alt="" onerror="this.remove()">O</span>orbit</div>
+ <nav class="nav" id="sideNav" aria-label="Main">
+  <button data-act="nav" data-v="dashboard"><i aria-hidden="true">◫</i>Overview</button>
+  <button data-act="nav" data-v="attendance"><i aria-hidden="true">◷</i>Attendance</button>
+  <button data-act="nav" data-v="assignments"><i aria-hidden="true">▤</i>Assignments</button>
+  <button data-act="nav" data-v="timetable"><i aria-hidden="true">▦</i>Timetable</button>
+  <button data-act="nav" data-v="settings"><i aria-hidden="true">⚙</i>Settings</button>
+ </nav>
+ <div class="side-foot"><div class="sync"><span class="sdot"></span><span id="syncText">Saved on this device</span></div><div>Made by Auraverse</div></div>
+</aside>
+<main class="main">
+ <header class="top"><div class="muted" id="todayLabel"></div><h1 id="pageTitle"></h1></header>
+
+ <section class="view" id="view-dashboard">
+  <div id="onboard"></div>
+  <div class="strip" id="stats"></div>
+  <div class="cols">
+   <article class="card"><div class="head"><h2>Today's classes</h2><button class="btn" data-act="nav" data-v="attendance">Attendance</button></div><div class="list" id="todayList"></div></article>
+   <article class="card"><div class="head"><h2>Deadlines</h2><button class="btn" data-act="nav" data-v="assignments">All tasks</button></div><div class="list" id="deadlineList"></div></article>
+   <article class="card"><div class="head"><h2>This month by subject</h2></div><div class="list" id="subjectOverview"></div></article>
+   <article class="card"><div class="head"><h2>Coming up</h2><button class="btn" data-act="nav" data-v="timetable">Timetable</button></div><div class="list" id="upcomingList"></div></article>
+  </div>
+ </section>
+
+ <section class="view" id="view-attendance">
+  <div class="head"><h2>Attendance</h2><button class="btn primary" data-act="markall">Mark unmarked as present</button></div>
+  <div class="tabs" role="tablist"><button data-act="tab" data-t="daily" class="on">Daily log</button><button data-act="tab" data-t="monthly">Monthly &amp; subjects</button></div>
+  <div id="tab-daily">
+   <div class="toolbar"><input id="attDate" type="date" aria-label="Date"><select id="attSubject" aria-label="Subject filter"></select></div>
+   <div class="list" id="attList"></div>
+  </div>
+  <div id="tab-monthly" hidden>
+   <div class="toolbar"><input id="monthPick" type="month" aria-label="Month"><select id="trendSub" aria-label="Trend subject"></select></div>
+   <div id="monthly"></div>
+  </div>
+ </section>
+
+ <section class="view" id="view-assignments">
+  <div class="head"><h2>Assignments</h2><button class="btn primary" data-act="add-task">New assignment</button></div>
+  <div class="toolbar"><input id="taskSearch" placeholder="Search assignments" aria-label="Search assignments"><select id="taskFilter" aria-label="Status filter"><option value="all">All</option><option value="pending">Pending</option><option value="overdue">Overdue</option><option value="submitted">Submitted</option></select><select id="taskSubject" aria-label="Subject filter"></select></div>
+  <div class="list" id="taskList"></div>
+ </section>
+
+ <section class="view" id="view-timetable">
+  <div class="head"><h2>Weekly timetable</h2><button class="btn primary" data-act="add-class">Add class</button></div>
+  <div class="week" id="weekGrid"></div>
+  <div class="head" style="margin-top:24px"><h2>All classes</h2></div>
+  <div class="list" id="classList"></div>
+ </section>
+
+ <section class="view" id="view-settings">
+  <div class="cols">
+   <article class="card" id="cloudCard"></article>
+   <article class="card"><div class="head"><h2>Profile</h2></div>
+    <label class="fld">Your name<input id="studentName" autocomplete="name" placeholder="Used in the greeting"></label>
+    <div class="actions"><button class="btn primary" data-act="save-name">Save name</button></div>
+    <div class="head" style="margin-top:24px"><h2>Subjects</h2><button class="btn primary" data-act="add-sub">Add subject</button></div>
+    <div class="list" id="subjectList"></div></article>
+   <article class="card"><div class="head"><h2>Semester</h2></div><p class="muted">Classes only appear between these dates, and Can I skip? counts hours up to the end date.</p><div class="fgrid"><label>Start<input id="semStart" type="date"></label><label>End<input id="semEnd" type="date"></label><label class="full">Holidays (one date per line, YYYY-MM-DD)<textarea id="semHol" rows="3"></textarea></label></div><div class="actions"><button class="btn primary" data-act="save-sem">Save semester</button></div></article>
+   <article class="card"><div class="head"><h2>Backup</h2></div>
+    <p class="muted">Your data is saved in this browser. Export a copy now and then, even with cloud sync on.</p>
+    <div class="actions"><button class="btn primary" data-act="export">Export backup</button><button class="btn" data-act="import">Import backup</button><input type="file" id="importFile" accept=".json,application/json" hidden></div></article>
+  </div>
+ </section>
+</main>
+</div>
+<nav class="mnav" id="mobNav" aria-label="Mobile">
+ <button data-act="nav" data-v="dashboard"><i aria-hidden="true">◫</i>Home</button>
+ <button data-act="nav" data-v="attendance"><i aria-hidden="true">◷</i>Attendance</button>
+ <button data-act="nav" data-v="assignments"><i aria-hidden="true">▤</i>Tasks</button>
+ <button data-act="nav" data-v="timetable"><i aria-hidden="true">▦</i>Timetable</button>
+ <button data-act="nav" data-v="settings"><i aria-hidden="true">⚙</i>Settings</button>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<dialog id="modal"><form id="modalForm"><div class="head"><div><h2 id="mTitle"></h2><p class="muted" id="mDesc"></p></div><button class="btn" type="button" data-act="close" aria-label="Close">✕</button></div><div class="fgrid" id="mFields"></div><div class="actions"><button class="btn" type="button" data-act="close">Cancel</button><button class="btn primary" type="submit">Save</button></div></form></dialog>
+<dialog id="wizard"><div class="head"><div><h2>Set up cloud sync</h2><p class="muted">Free, takes about five minutes, and you only do it once. Your data lives in your own Supabase project, so only you can read it.</p></div><button class="btn" data-act="w-close" aria-label="Close">✕</button></div>
+<ol class="steps">
+<li><b>Create a project.</b> Sign up at supabase.com and create a free project.</li>
+<li><b>Create the table.</b> Open <i>SQL Editor</i>, paste this, and click Run. <button class="btn" data-act="w-copy">Copy SQL</button><pre id="sqlText"></pre></li>
+<li><b>Check sign-in settings.</b> In <i>Authentication → Sign In / Providers</i>, keep Email on. For personal use, turn off <i>Confirm email</i>. In <i>Authentication → URL Configuration</i>, set Site URL to <code id="siteUrl"></code>.</li>
+<li><b>Copy your keys.</b> In <i>Project Settings → API</i>, copy the Project URL and the <i>anon</i> (publishable) key. Never use the service_role or secret key.
+<div class="fgrid"><label class="full">Project URL<input id="wUrl" placeholder="https://abcd.supabase.co" autocomplete="off"></label><label class="full">Anon key<input id="wKey" autocomplete="off" spellcheck="false"></label><label class="full">Or paste a setup code from another device<input id="wCode" autocomplete="off"></label></div></li></ol>
+<p class="err" id="wErr" role="alert"></p>
+<div class="actions"><button class="btn" data-act="w-skip">Skip, use this device only</button><button class="btn primary" data-act="w-test">Test and save</button></div></dialog>
+<script src="supabase.js"></script>
+<script src="app.js"></script>
+<script src="cloud.js"></script>
+</body>
+</html>
