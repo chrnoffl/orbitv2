@@ -8,7 +8,7 @@
 <meta name="description" content="Orbit tracks your attendance and assignments, with a weekly timetable to tie them together.">
 <link rel="icon" href="icon.png" type="image/png">
 <title>Orbit</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
 <div class="app">
@@ -24,7 +24,7 @@
  <div class="side-foot"><div class="sync"><span class="sdot"></span><span id="syncText">Saved on this device</span></div><div>Made by Auraverse</div></div>
 </aside>
 <main class="main">
- <header class="top"><div><div class="muted" id="todayLabel"></div><h1 id="pageTitle"></h1></div><img class="toplogo" src="logo.png" alt="Orbit" onerror="this.remove()"></header>
+ <header class="top"><div><div class="muted" id="todayLabel"></div><h1 id="pageTitle"></h1></div><img class="toplogo" src="logo.png" alt="Orbit" height="44" style="height:44px;width:auto;max-width:40%;object-fit:contain" onerror="this.remove()"></header>
 
  <section class="view" id="view-dashboard">
   <div id="onboard"></div>
@@ -88,17 +88,18 @@
 </nav>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <dialog id="modal"><form id="modalForm"><div class="head"><div><h2 id="mTitle"></h2><p class="muted" id="mDesc"></p></div><button class="btn" type="button" data-act="close" aria-label="Close">✕</button></div><div class="fgrid" id="mFields"></div><div class="actions"><button class="btn" type="button" data-act="close">Cancel</button><button class="btn primary" type="submit">Save</button></div></form></dialog>
-<dialog id="wizard"><div class="head"><div><h2>Set up cloud sync</h2><p class="muted">Free, takes about five minutes, and you only do it once. Your data lives in your own Supabase project, so only you can read it.</p></div><button class="btn" data-act="w-close" aria-label="Close">✕</button></div>
-<ol class="steps">
-<li><b>Create a project.</b> Sign up at supabase.com and create a free project.</li>
-<li><b>Create the table.</b> Open <i>SQL Editor</i>, paste this, and click Run. <button class="btn" data-act="w-copy">Copy SQL</button><pre id="sqlText"></pre></li>
-<li><b>Check sign-in settings.</b> In <i>Authentication → Sign In / Providers</i>, keep Email on. For personal use, turn off <i>Confirm email</i>. In <i>Authentication → URL Configuration</i>, set Site URL to <code id="siteUrl"></code>.</li>
-<li><b>Copy your keys.</b> In <i>Project Settings → API</i>, copy the Project URL and the <i>anon</i> (publishable) key. Never use the service_role or secret key.
-<div class="fgrid"><label class="full">Project URL<input id="wUrl" placeholder="https://abcd.supabase.co" autocomplete="off"></label><label class="full">Anon key<input id="wKey" autocomplete="off" spellcheck="false"></label><label class="full">Or paste a setup code from another device<input id="wCode" autocomplete="off"></label></div></li></ol>
-<p class="err" id="wErr" role="alert"></p>
-<div class="actions"><button class="btn" data-act="w-skip">Skip, use this device only</button><button class="btn primary" data-act="w-test">Test and save</button></div></dialog>
+<dialog id="wizard" aria-labelledby="wzTitle">
+<div class="wz-head"><div><h2 id="wzTitle">Set up cloud sync</h2><p class="muted">One-time setup, about five minutes. Your data is stored in your own free Supabase project, so only you can read it.</p></div><button class="btn" data-act="w-close" aria-label="Close">✕</button></div>
+<div class="wz-body"><ol class="steps">
+<li><b>Create a project</b><p>Sign up at supabase.com and create a new free project.</p></li>
+<li><div class="sline"><b>Create the table</b><button class="btn" data-act="w-copy">Copy SQL</button></div><p>Open <i>SQL Editor</i>, paste this and click Run.</p><pre id="sqlText" tabindex="0"></pre></li>
+<li><b>Check sign-in settings</b><p>In <i>Authentication → Sign In / Providers</i>, keep Email on. For personal use, turn off <i>Confirm email</i>.</p><p>In <i>Authentication → URL Configuration</i>, set Site URL to:</p><code id="siteUrl"></code></li>
+<li><b>Paste your keys</b><p>In <i>Project Settings → API</i>, copy the Project URL and the <i>anon</i> (publishable) key. Never use the service_role or secret key.</p>
+<div class="fgrid"><label class="full">Project URL<input id="wUrl" placeholder="https://abcd.supabase.co" autocomplete="off"></label><label class="full">Anon key<input id="wKey" autocomplete="off" spellcheck="false"></label><label class="full">Or paste a setup code from another device<input id="wCode" autocomplete="off"></label></div></li>
+</ol></div>
+<div class="wz-foot"><p class="err" id="wErr" role="alert"></p><button class="btn" data-act="w-skip">Skip, use this device only</button><button class="btn primary" data-act="w-test">Test and save</button></div></dialog>
 <script src="supabase.js"></script>
-<script src="app.js"></script>
-<script src="cloud.js"></script>
+<script src="app.js?v=5"></script>
+<script src="cloud.js?v=5"></script>
 </body>
 </html>
