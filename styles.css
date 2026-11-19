@@ -79,3 +79,6 @@ code{background:var(--s2);padding:1px 6px;border-radius:4px;word-break:break-all
 #wizard{width:min(620px,calc(100% - 24px));max-height:92vh;background:var(--s1);color:var(--text);border:1px solid var(--line);border-radius:var(--r3);padding:20px}#wizard::backdrop{background:#000a}
 .cloudrow{display:grid;gap:10px}
 .marks button[aria-pressed=true].cancelled{background:#26262b;border-color:#6a6a75;color:var(--text)}.subs{display:grid;gap:2px;margin-top:6px;font-size:var(--fs-s)}.subs label{display:flex;gap:8px;align-items:center}a{color:var(--accent-t)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px}.toplogo{height:44px;max-width:45%;object-fit:contain}
+textarea{width:100%;max-width:100%;resize:vertical;min-height:84px}
+@media(max-width:680px){.toplogo{height:34px}}
